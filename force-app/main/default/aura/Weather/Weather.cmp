@@ -1,0 +1,76 @@
+<aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes" access="global" controller="WeatherForecast_Controller">
+    
+    <aura:attribute name="city" type="String" />
+    <lightning:input label="City" value="{!v.city}" required="true" placeholder="Enter a city here"/>
+    <lightning:button label="Get Weather" variant="brand" onclick="{!c.getWeather}" /> <br />
+    
+    <aura:attribute name="weatherData" type="Map" />
+    <aura:attribute name="firstDay" type="Map" />
+    <aura:attribute name="secondDay" type="Map" />
+    <aura:attribute name="thirdDay" type="Map" />
+    
+    
+    <aura:if isTrue="{!v.weatherData}">
+        
+        <!-- location -->
+        <lightning:card iconName="standard:address" title="Address">
+            <p class="slds-p-horizontal_small">
+                City:       {!v.weatherData.location.name}  <br/>
+                Region:     {!v.weatherData.location.region} <br/>
+                country:    {!v.weatherData.location.country} <br/>
+                Local time: {!v.weatherData.location.localtime} <br/>
+            </p>
+        </lightning:card>
+        
+        <!-- current -->
+        <lightning:card iconName="custom:custom97" footer="{!v.weatherData.current.condition.text}" title="Current Weather">
+            <p class="slds-p-horizontal_small">
+                Current temperature(in C): {!v.weatherData.current.feelslike_c}<br/>
+                Current temperature(in F): {!v.weatherData.current.feelslike_f}<br/>
+                Humidity: {!v.weatherData.current.humidity}<br/>
+                Wind speed(in kph): {!v.weatherData.current.wind_kph}<br/>
+                Wind Direction: {!v.weatherData.current.wind_dir}<br/>
+                Average temperature(in C): {!v.weatherData.current.temp_c}<br/>
+                Average temperature(in F): {!v.weatherData.current.temp_f}<br/>
+            </p>
+        </lightning:card>
+        
+        <!-- forecast -->
+        <lightning:card iconName="standard:event" title="{!v.firstDay.date+' (forecast for the rest of the day)'}" footer="{!v.firstDay.day.condition.text}" >
+            <p class="slds-p-horizontal_small">
+                Minimum temperature(in C): {!v.firstDay.day.mintemp_c}   <br/>
+                Maximum temperature(in C): {!v.firstDay.day.maxtemp_c}   <br/>
+                Average temperature(in C): {!v.firstDay.day.avgtemp_c}   <br/>
+                Average Humidity: {!v.firstDay.day.avghumidity}   <br/>
+                Maximum Wind speed(in kph): {!v.firstDay.day.maxwind_kph}   <br/>
+                
+                <!--                {!v.firstDay.astro.sunrise}   <br/>
+                {!v.firstDay.astro.sunset}   <br/>
+                {!v.firstDay.astro.moonrise}   <br/>
+                {!v.firstDay.astro.moonset}   <br/>
+    -->            
+            </p>
+        </lightning:card>
+        <lightning:card iconName="standard:event" title="{!v.secondDay.date}" footer="{!v.secondDay.day.condition.text}" >
+            <p class="slds-p-horizontal_small">
+                Minimum temperature(in C):  {!v.secondDay.day.mintemp_c}   <br/>
+                Maximum temperature(in C):  {!v.secondDay.day.maxtemp_c}   <br/>
+                Average temperature(in C): {!v.secondDay.day.avgtemp_c}   <br/>
+                Average Humidity: {!v.secondDay.day.avghumidity}   <br/>
+                Maximum Wind speed(in kph): {!v.secondDay.day.maxwind_kph}   <br/>
+            </p>
+        </lightning:card>
+        
+        <lightning:card iconName="standard:event" title="{!v.thirdDay.date}" footer="{!v.thirdDay.day.condition.text}" >
+            <p class="slds-p-horizontal_small">
+                <br/>
+                Minimum temperature(in C): {!v.thirdDay.day.mintemp_c}   <br/>
+                Maximum temperature(in C):  {!v.thirdDay.day.maxtemp_c}   <br/>
+                Average temperature(in C): {!v.thirdDay.day.avgtemp_c}   <br/>
+                Average Humidity: {!v.thirdDay.day.avghumidity}   <br/>
+                Maximum Wind speed(in kph): {!v.thirdDay.day.maxwind_kph}   <br/>
+            </p>
+        </lightning:card>
+        
+    </aura:if>    
+</aura:component>
