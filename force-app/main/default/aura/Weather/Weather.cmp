@@ -1,8 +1,15 @@
 <aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes" access="global" controller="WeatherForecast_Controller">
     
     <aura:attribute name="city" type="String" />
-    <lightning:input label="City" value="{!v.city}" required="true" placeholder="Enter a city here"/>
-    <lightning:button label="Get Weather" variant="brand" onclick="{!c.getWeather}" /> <br />
+    
+    <div class="slds-align_absolute-center">
+        <lightning:input label="City" value="{!v.city}" required="true" placeholder="Enter a city here"/>
+        &nbsp; &nbsp; &nbsp; &nbsp;
+        <lightning:button label="Get Weather" variant="brand" onclick="{!c.getWeather}" />
+    </div>
+    
+    
+    <br />    
     
     <aura:attribute name="weatherData" type="Map" />
     <aura:attribute name="firstDay" type="Map" />
@@ -23,7 +30,7 @@
         </lightning:card>
         
         <!-- current -->
-        <lightning:card iconName="custom:custom97" footer="{!v.weatherData.current.condition.text}" title="Current Weather">
+        <lightning:card iconName="custom:custom97" title="Current Weather">
             <p class="slds-p-horizontal_small">
                 Current temperature(in C): {!v.weatherData.current.feelslike_c}<br/>
                 Current temperature(in F): {!v.weatherData.current.feelslike_f}<br/>
@@ -33,44 +40,89 @@
                 Average temperature(in C): {!v.weatherData.current.temp_c}<br/>
                 Average temperature(in F): {!v.weatherData.current.temp_f}<br/>
             </p>
+            
+            <aura:set attribute="footer" >
+                <center><b>
+                    <p style="background-color:lightblue;">
+                        {!v.weatherData.current.condition.text}
+                    </p>
+                    </b></center>
+            </aura:set>
+            
         </lightning:card>
         
         <!-- forecast -->
-        <lightning:card iconName="standard:event" title="{!v.firstDay.date+' (forecast for the rest of the day)'}" footer="{!v.firstDay.day.condition.text}" >
-            <p class="slds-p-horizontal_small">
-                Minimum temperature(in C): {!v.firstDay.day.mintemp_c}   <br/>
-                Maximum temperature(in C): {!v.firstDay.day.maxtemp_c}   <br/>
-                Average temperature(in C): {!v.firstDay.day.avgtemp_c}   <br/>
-                Average Humidity: {!v.firstDay.day.avghumidity}   <br/>
-                Maximum Wind speed(in kph): {!v.firstDay.day.maxwind_kph}   <br/>
-                
-                <!--                {!v.firstDay.astro.sunrise}   <br/>
+        <div class="slds-grid slds-wrap">
+            <!-- firstDay -->
+            <div class="slds-col slds-size_1-of-3 slds-p-around_small">
+                <lightning:card iconName="standard:event" title="{!v.firstDay.date+' (forecast for the rest of the day)'}" >
+                    <p class="slds-p-horizontal_small">
+                        Minimum temperature(in C): {!v.firstDay.day.mintemp_c}   <br/>
+                        Maximum temperature(in C): {!v.firstDay.day.maxtemp_c}   <br/>
+                        Average temperature(in C): {!v.firstDay.day.avgtemp_c}   <br/>
+                        Average Humidity: {!v.firstDay.day.avghumidity}   <br/>
+                        Maximum Wind speed(in kph): {!v.firstDay.day.maxwind_kph}   <br/>
+                        
+                        <!-- (this is the extra data in the response)
+    {!v.firstDay.astro.sunrise}   <br/>
                 {!v.firstDay.astro.sunset}   <br/>
                 {!v.firstDay.astro.moonrise}   <br/>
                 {!v.firstDay.astro.moonset}   <br/>
-    -->            
-            </p>
-        </lightning:card>
-        <lightning:card iconName="standard:event" title="{!v.secondDay.date}" footer="{!v.secondDay.day.condition.text}" >
-            <p class="slds-p-horizontal_small">
-                Minimum temperature(in C):  {!v.secondDay.day.mintemp_c}   <br/>
-                Maximum temperature(in C):  {!v.secondDay.day.maxtemp_c}   <br/>
-                Average temperature(in C): {!v.secondDay.day.avgtemp_c}   <br/>
-                Average Humidity: {!v.secondDay.day.avghumidity}   <br/>
-                Maximum Wind speed(in kph): {!v.secondDay.day.maxwind_kph}   <br/>
-            </p>
-        </lightning:card>
-        
-        <lightning:card iconName="standard:event" title="{!v.thirdDay.date}" footer="{!v.thirdDay.day.condition.text}" >
-            <p class="slds-p-horizontal_small">
-                <br/>
-                Minimum temperature(in C): {!v.thirdDay.day.mintemp_c}   <br/>
-                Maximum temperature(in C):  {!v.thirdDay.day.maxtemp_c}   <br/>
-                Average temperature(in C): {!v.thirdDay.day.avgtemp_c}   <br/>
-                Average Humidity: {!v.thirdDay.day.avghumidity}   <br/>
-                Maximum Wind speed(in kph): {!v.thirdDay.day.maxwind_kph}   <br/>
-            </p>
-        </lightning:card>
+       -->            
+                    </p>
+                    
+                    <aura:set attribute="footer" >
+                        <center><b>
+                            <p style="background-color:lightblue;">
+                                {!v.firstDay.day.condition.text}
+                            </p>
+                            </b></center>
+                    </aura:set>
+                </lightning:card>
+            </div>
+            <!-- secondDay -->
+            <div class="slds-col slds-size_1-of-3 slds-p-around_small">
+                <lightning:card iconName="standard:event" title="{!v.secondDay.date}" >
+                    <p class="slds-p-horizontal_small">
+                        Minimum temperature(in C):  {!v.secondDay.day.mintemp_c}   <br/>
+                        Maximum temperature(in C):  {!v.secondDay.day.maxtemp_c}   <br/>
+                        Average temperature(in C): {!v.secondDay.day.avgtemp_c}   <br/>
+                        Average Humidity: {!v.secondDay.day.avghumidity}   <br/>
+                        Maximum Wind speed(in kph): {!v.secondDay.day.maxwind_kph}   <br/>
+                    </p>
+                    
+                    <aura:set attribute="footer" >
+                        <center><b>
+                            <p style="background-color:lightblue;">
+                                {!v.secondDay.day.condition.text}
+                            </p>
+                            </b></center>
+                    </aura:set>
+                    
+                </lightning:card>
+            </div>
+            <!-- thirdDay -->
+            <div class="slds-col slds-size_1-of-3 slds-p-around_small">
+                <lightning:card iconName="standard:event" title="{!v.thirdDay.date}">
+                    <p class="slds-p-horizontal_small">
+                        Minimum temperature(in C): {!v.thirdDay.day.mintemp_c}   <br/>
+                        Maximum temperature(in C):  {!v.thirdDay.day.maxtemp_c}   <br/>
+                        Average temperature(in C): {!v.thirdDay.day.avgtemp_c}   <br/>
+                        Average Humidity: {!v.thirdDay.day.avghumidity}   <br/>
+                        Maximum Wind speed(in kph): {!v.thirdDay.day.maxwind_kph}   <br/>
+                    </p>
+                    
+                    <aura:set attribute="footer" >
+                        <center><b>
+                            <p style="background-color:lightblue;">
+                                {!v.thirdDay.day.condition.text}
+                            </p>
+                            </b></center>
+                    </aura:set>
+                    
+                </lightning:card>        
+            </div>
+        </div>
         
     </aura:if>    
 </aura:component>
